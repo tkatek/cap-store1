@@ -1,0 +1,145 @@
+/* collection.css — extends index.css */
+
+body { padding-top: var(--nav-h); }
+
+.back-btn {
+  font-family: var(--font-ui) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  color: var(--accent) !important;
+  transition: transform 0.3s !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.back-btn:hover { transform: translateX(-4px) !important; color: var(--white) !important; }
+
+.collection-header {
+  text-align: center;
+  padding: 80px 40px 40px;
+  background: var(--bg);
+  position: relative;
+}
+.collection-header::after {
+  content: 'CAPS';
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 200px;
+  color: rgba(255,255,255,0.02);
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.collection-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(50px, 8vw, 100px);
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+  margin-bottom: 16px;
+  animation: fadeUp 0.8s var(--transition) 0.2s both;
+}
+.collection-header p {
+  color: var(--text-muted);
+  font-size: 16px;
+  animation: fadeUp 0.8s var(--transition) 0.4s both;
+}
+
+/* Filters */
+.filters-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 30px 80px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(8,8,16,0.9);
+}
+.filter-btn {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #080810;
+}
+.filter-sort {
+  margin-left: auto;
+}
+.filter-sort select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 8px 18px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+.filter-sort select:focus { border-color: var(--accent); }
+
+/* Grid */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 60px 80px;
+  background: var(--bg);
+  min-height: 60vh;
+}
+
+.collection-footer-note {
+  text-align: center;
+  padding: 20px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding-bottom: 80px;
+}
+
+/* Card entering animation */
+.product-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cardIn 0.5s var(--transition) forwards;
+}
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+.product-card.hiding {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+@media (max-width: 1200px) {
+  .collection-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .filters-bar { padding: 20px 24px; }
+  .collection-grid { grid-template-columns: repeat(2, 1fr); padding: 40px 24px; }
+}
+@media (max-width: 480px) {
+  .collection-grid { grid-template-columns: 1fr; }
+}

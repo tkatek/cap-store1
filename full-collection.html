@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEXO — Full Collection</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="collection.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="back-btn">← HOME</a>
+  </div>
+  <div class="nav-logo">VEXO</div>
+  <div class="nav-right">
+    <a href="cart.html" class="cart-link">
+      <span class="cart-icon">🛒</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </a>
+  </div>
+</nav>
+
+<!-- COLLECTION HEADER -->
+<div class="collection-header">
+  <span class="section-tag">ALL PRODUCTS</span>
+  <h1>The Full Collection</h1>
+  <p>Every cap, every style. Filter by your vibe.</p>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <button class="filter-btn active" data-filter="all">ALL</button>
+  <button class="filter-btn" data-filter="snapback">SNAPBACK</button>
+  <button class="filter-btn" data-filter="dad">DAD CAP</button>
+  <button class="filter-btn" data-filter="trucker">TRUCKER</button>
+  <button class="filter-btn" data-filter="limited">LIMITED</button>
+  <div class="filter-sort">
+    <select id="sortSelect">
+      <option value="default">Sort: Featured</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name">Name A–Z</option>
+    </select>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="collection-grid" id="collectionGrid"></div>
+
+<!-- FOOTER NOTE -->
+<div class="collection-footer-note">
+  Showing all <span id="countLabel">12</span> products
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toastMsg">Added to cart!</span>
+</div>
+
+<script src="collection.js"></script>
+</body>
+</html>
