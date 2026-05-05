@@ -12,15 +12,14 @@
 <!-- ========== NAV ========== -->
 <nav id="navbar">
   <div class="nav-left">
-    <a href="#">SHOP</a>
-    <a href="#">MEN</a>
-    <a href="#">WOMEN</a>
-    <a href="#">TRENDING</a>
+    <a href="#hero">HOME</a>
+    <a href="#about">ABOUT US</a>
+    <a href="#store">SHOP</a>
+    <a href="#process">PROCESS</a>
+    <a href="#contact">CONTACT</a>
   </div>
   <div class="nav-logo">VEXO</div>
   <div class="nav-right">
-    <a href="#">SEASONAL</a>
-    <a href="#">ACCESSORIES</a>
     <a href="cart.html" class="cart-link">
       <span class="cart-icon">🛒</span>
       <span class="cart-count" id="cartCount">0</span>
@@ -34,9 +33,9 @@
   <div class="hero-content">
     <div class="hero-tag">NEW COLLECTION 2025</div>
     <h1 class="hero-title">
-      <span class="line" data-text="GEAR UP">GEAR UP</span>
-      <span class="line" data-text="EVERY">EVERY</span>
-      <span class="line accent" data-text="SEASON">SEASON</span>
+      <span class="line">GEAR UP</span>
+      <span class="line">EVERY</span>
+      <span class="line accent">SEASON</span>
     </h1>
     <p class="hero-sub">Premium headwear engineered for those who move with purpose. Built to last. Designed to stand out.</p>
     <div class="hero-btns">
@@ -46,7 +45,7 @@
   </div>
   <div class="hero-img-wrap">
     <div class="hero-img-box">
-      <img src="images/hero-cap.jpg" alt="Hero Cap" onerror="this.style.background='linear-gradient(135deg,#1a1a1a,#333)';this.alt=''">
+      <img src="images/hero-cap.jpg" alt="Hero Cap" onerror="this.style.display='none'">
       <div class="hero-img-label">THE ICON</div>
     </div>
   </div>
@@ -56,73 +55,165 @@
   </div>
 </section>
 
-<!-- ========== ABOUT / TIMELINE ========== -->
+<!-- ========== ABOUT — HORIZONTAL SCROLL ========== -->
 <section class="about" id="about">
-  <div class="about-header">
-    <span class="section-tag">OUR STORY</span>
-    <h2>Born on the streets.<br>Built for the world.</h2>
-    <p class="about-intro">From a small workshop to a global movement — here's how it all began.</p>
-  </div>
+  <!-- Sticky container that pins while user scrolls -->
+  <div class="about-sticky">
 
-  <div class="timeline-wrapper">
-    <div class="timeline-track" id="timelineTrack">
-      <div class="timeline-item">
-        <div class="tl-year">2010</div>
-        <div class="tl-img-wrap">
-          <img src="images/tl1.jpg" alt="" onerror="this.parentElement.style.background='#1a1a2e'">
-        </div>
-        <div class="tl-content">
-          <h3>The Beginning</h3>
-          <p>Two friends, one sewing machine, and a vision to create headwear that actually meant something.</p>
-        </div>
+    <!-- Left fixed panel -->
+    <div class="about-fixed-panel">
+      <span class="section-tag">OUR STORY</span>
+      <h2>Born on<br>the streets.<br>Built for<br>the world.</h2>
+      <p>From a small workshop to a global movement.</p>
+      <div class="scroll-progress-wrap">
+        <div class="scroll-progress-bar" id="progressBar"></div>
       </div>
-      <div class="timeline-item">
-        <div class="tl-year">2013</div>
-        <div class="tl-img-wrap">
-          <img src="images/tl2.jpg" alt="" onerror="this.parentElement.style.background='#0d1117'">
-        </div>
-        <div class="tl-content">
-          <h3>First Store</h3>
-          <p>Opened our flagship in downtown LA. 200 caps sold on day one. We knew this was real.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="tl-year">2016</div>
-        <div class="tl-img-wrap">
-          <img src="images/tl3.jpg" alt="" onerror="this.parentElement.style.background='#161b22'">
-        </div>
-        <div class="tl-content">
-          <h3>Global Drop</h3>
-          <p>Our limited collab with underground artists sold out in 4 minutes. 80,000 on the waitlist.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="tl-year">2019</div>
-        <div class="tl-img-wrap">
-          <img src="images/tl4.jpg" alt="" onerror="this.parentElement.style.background='#0f0f1a'">
-        </div>
-        <div class="tl-content">
-          <h3>Sustainable Era</h3>
-          <p>Switched to 100% recycled materials. Style without compromise. Planet first, always.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="tl-year">2025</div>
-        <div class="tl-img-wrap">
-          <img src="images/tl5.jpg" alt="" onerror="this.parentElement.style.background='#111'>">
-        </div>
-        <div class="tl-content">
-          <h3>The Future</h3>
-          <p>200+ styles. 40 countries. And we're just getting started. Welcome to the new era of VEXO.</p>
-        </div>
-      </div>
+      <div class="scroll-progress-label" id="progressLabel">01 / 15</div>
     </div>
-    <div class="timeline-nav">
-      <button class="tl-btn" id="tlPrev">←</button>
-      <div class="tl-dots" id="tlDots"></div>
-      <button class="tl-btn" id="tlNext">→</button>
+
+    <!-- Horizontal scrolling strip -->
+    <div class="about-h-track-wrap">
+      <div class="about-h-track" id="hTrack">
+
+        <div class="hs-item">
+          <div class="hs-img-wrap">
+            <img src="images/tl1.jpg" alt="" onerror="this.parentElement.style.background='#111'">
+          </div>
+          <div class="hs-year">2010</div>
+          <div class="hs-title">The Beginning</div>
+          <p class="hs-text">Two friends, one sewing machine, and a vision to create headwear that actually meant something.</p>
+        </div>
+
+        <div class="hs-item hs-wide">
+          <div class="hs-img-wrap">
+            <img src="images/tl2.jpg" alt="" onerror="this.parentElement.style.background='#0d0d1a'">
+          </div>
+          <div class="hs-year">2011</div>
+          <div class="hs-title">First Sample</div>
+          <p class="hs-text">After 60 failed prototypes, the first VEXO cap finally held its shape. We wore it everywhere.</p>
+        </div>
+
+        <div class="hs-item">
+          <div class="hs-img-wrap">
+            <img src="images/tl3.jpg" alt="" onerror="this.parentElement.style.background='#161b22'">
+          </div>
+          <div class="hs-year">2012</div>
+          <div class="hs-title">Street Hustle</div>
+          <p class="hs-text">Sold from the back of a van at local markets. Zero budget, maximum belief.</p>
+        </div>
+
+        <div class="hs-item hs-tall">
+          <div class="hs-img-wrap">
+            <img src="images/tl4.jpg" alt="" onerror="this.parentElement.style.background='#0f0f1a'">
+          </div>
+          <div class="hs-year">2013</div>
+          <div class="hs-title">First Store</div>
+          <p class="hs-text">Opened our flagship in downtown LA. 200 caps sold on day one. We knew this was real.</p>
+        </div>
+
+        <div class="hs-item">
+          <div class="hs-img-wrap">
+            <img src="images/cap1.jpg" alt="" onerror="this.parentElement.style.background='#1a1a1a'">
+          </div>
+          <div class="hs-year">2014</div>
+          <div class="hs-title">Online Launch</div>
+          <p class="hs-text">Our website crashed on launch day. 4,000 orders in 2 hours. We called it a win.</p>
+        </div>
+
+        <div class="hs-item hs-wide">
+          <div class="hs-img-wrap">
+            <img src="images/cap2.jpg" alt="" onerror="this.parentElement.style.background='#1a1a2e'">
+          </div>
+          <div class="hs-year">2015</div>
+          <div class="hs-title">Media Moment</div>
+          <p class="hs-text">Featured in Highsnobiety. Our inbox exploded overnight. The culture noticed.</p>
+        </div>
+
+        <div class="hs-item">
+          <div class="hs-img-wrap">
+            <img src="images/cap3.jpg" alt="" onerror="this.parentElement.style.background='#1c1020'">
+          </div>
+          <div class="hs-year">2016</div>
+          <div class="hs-title">Global Drop</div>
+          <p class="hs-text">Our limited collab with underground artists sold out in 4 minutes. 80,000 on the waitlist.</p>
+        </div>
+
+        <div class="hs-item hs-tall">
+          <div class="hs-img-wrap">
+            <img src="images/cap4.jpg" alt="" onerror="this.parentElement.style.background='#1a120a'">
+          </div>
+          <div class="hs-year">2017</div>
+          <div class="hs-title">10 Countries</div>
+          <p class="hs-text">Expanded to Europe and Asia. Our caps were spotted from Tokyo to Berlin in the same week.</p>
+        </div>
+
+        <div class="hs-item">
+          <div class="hs-img-wrap">
+            <img src="images/cap5.jpg" alt="" onerror="this.parentElement.style.background='#0a0a1a'">
+          </div>
+          <div class="hs-year">2018</div>
+          <div class="hs-title">Studio Built</div>
+          <p class="hs-text">Moved into our own 8,000 sq ft studio. Real machines. Real team. Real craft.</p>
+        </div>
+
+        <div class="hs-item hs-wide">
+          <div class="hs-img-wrap">
+            <img src="images/cap6.jpg" alt="" onerror="this.parentElement.style.background='#0a1a0a'">
+          </div>
+          <div class="hs-year">2019</div>
+          <div class="hs-title">Sustainable Era</div>
+          <p class="hs-text">Switched to 100% recycled materials. Style without compromise. Planet first, always.</p>
+        </div>
+
+        <div class="hs-item">
+          <div class="hs-img-wrap">
+            <img src="images/cap7.jpg" alt="" onerror="this.parentElement.style.background='#1a1a18'">
+          </div>
+          <div class="hs-year">2020</div>
+          <div class="hs-title">Pivot & Persist</div>
+          <p class="hs-text">The world paused. We kept creating. Released 3 collections digitally and never missed a drop.</p>
+        </div>
+
+        <div class="hs-item hs-tall">
+          <div class="hs-img-wrap">
+            <img src="images/cap8.jpg" alt="" onerror="this.parentElement.style.background='#1a1208'">
+          </div>
+          <div class="hs-year">2021</div>
+          <div class="hs-title">1M Community</div>
+          <p class="hs-text">Crossed 1 million followers. Not vanity — a real community of cap obsessives worldwide.</p>
+        </div>
+
+        <div class="hs-item">
+          <div class="hs-img-wrap">
+            <img src="images/cap9.jpg" alt="" onerror="this.parentElement.style.background='#081218'">
+          </div>
+          <div class="hs-year">2022</div>
+          <div class="hs-title">Award Winner</div>
+          <p class="hs-text">Best Sustainable Fashion Brand, Global Style Awards. We cried. Then went back to work.</p>
+        </div>
+
+        <div class="hs-item hs-wide">
+          <div class="hs-img-wrap">
+            <img src="images/cap10.jpg" alt="" onerror="this.parentElement.style.background='#080810'">
+          </div>
+          <div class="hs-year">2023</div>
+          <div class="hs-title">40 Countries</div>
+          <p class="hs-text">Now stocked in 200+ retailers across 40 countries. The vision finally matched the map.</p>
+        </div>
+
+        <div class="hs-item hs-tall">
+          <div class="hs-img-wrap">
+            <img src="images/cap11.jpg" alt="" onerror="this.parentElement.style.background='#1a1510'">
+          </div>
+          <div class="hs-year">2025</div>
+          <div class="hs-title">The Future</div>
+          <p class="hs-text">200+ styles. New materials lab. And a new chapter that's only just beginning. Welcome to VEXO.</p>
+        </div>
+
+      </div><!-- end hTrack -->
     </div>
-  </div>
+
+  </div><!-- end sticky -->
 </section>
 
 <!-- ========== STORE SECTION ========== -->
@@ -131,11 +222,7 @@
     <span class="section-tag">THE COLLECTION</span>
     <h2>Handpicked Favourites</h2>
   </div>
-
-  <div class="products-grid" id="productsGrid">
-    <!-- Cards injected by JS -->
-  </div>
-
+  <div class="products-grid" id="productsGrid"></div>
   <div class="store-cta">
     <a href="full-collection.html" class="btn-outline-big">VIEW FULL COLLECTION →</a>
   </div>
@@ -154,26 +241,10 @@
     </div>
   </div>
   <div class="why-right">
-    <div class="why-card wc1">
-      <div class="wc-icon">⚡</div>
-      <h4>Premium Materials</h4>
-      <p>Only the finest recycled cotton blends. Feels like nothing, lasts like forever.</p>
-    </div>
-    <div class="why-card wc2">
-      <div class="wc-icon">🎯</div>
-      <h4>Perfect Fit</h4>
-      <p>Structured crown, adjustable strap. One size fits a movement.</p>
-    </div>
-    <div class="why-card wc3">
-      <div class="wc-icon">🌍</div>
-      <h4>Sustainably Made</h4>
-      <p>Carbon-neutral production. Every purchase plants a tree. Style with a conscience.</p>
-    </div>
-    <div class="why-card wc4">
-      <div class="wc-icon">🔥</div>
-      <h4>Limited Drops</h4>
-      <p>No restocks. No compromises. Own something truly rare.</p>
-    </div>
+    <div class="why-card wc1"><div class="wc-icon">⚡</div><h4>Premium Materials</h4><p>Only the finest recycled cotton blends. Feels like nothing, lasts like forever.</p></div>
+    <div class="why-card wc2"><div class="wc-icon">🎯</div><h4>Perfect Fit</h4><p>Structured crown, adjustable strap. One size fits a movement.</p></div>
+    <div class="why-card wc3"><div class="wc-icon">🌍</div><h4>Sustainably Made</h4><p>Carbon-neutral production. Every purchase plants a tree. Style with a conscience.</p></div>
+    <div class="why-card wc4"><div class="wc-icon">🔥</div><h4>Limited Drops</h4><p>No restocks. No compromises. Own something truly rare.</p></div>
   </div>
 </section>
 
@@ -186,33 +257,25 @@
   <div class="process-steps">
     <div class="process-step ps-reveal">
       <div class="ps-num">01</div>
-      <div class="ps-img-wrap">
-        <img src="images/proc1.jpg" alt="Design" onerror="this.parentElement.style.background='#1c1c2e'">
-      </div>
+      <div class="ps-img-wrap"><img src="images/proc1.jpg" alt="Design" onerror="this.parentElement.style.background='#1c1c2e'"></div>
       <h4>Design</h4>
       <p>Every cap starts as a sketch. Our designers obsess over curves, proportions, and fabric flow for weeks.</p>
     </div>
     <div class="process-step ps-reveal">
       <div class="ps-num">02</div>
-      <div class="ps-img-wrap">
-        <img src="images/proc2.jpg" alt="Material" onerror="this.parentElement.style.background='#12121f'">
-      </div>
+      <div class="ps-img-wrap"><img src="images/proc2.jpg" alt="Material" onerror="this.parentElement.style.background='#12121f'"></div>
       <h4>Material</h4>
       <p>Sourced from certified sustainable mills. We touch, test, and tension every fabric before it cuts.</p>
     </div>
     <div class="process-step ps-reveal">
       <div class="ps-num">03</div>
-      <div class="ps-img-wrap">
-        <img src="images/proc3.jpg" alt="Craft" onerror="this.parentElement.style.background='#1a1a2e'">
-      </div>
+      <div class="ps-img-wrap"><img src="images/proc3.jpg" alt="Craft" onerror="this.parentElement.style.background='#1a1a2e'"></div>
       <h4>Craft</h4>
       <p>Hand-stitched panels. Precision-cut brims. A single cap takes 47 individual steps to complete.</p>
     </div>
     <div class="process-step ps-reveal">
       <div class="ps-num">04</div>
-      <div class="ps-img-wrap">
-        <img src="images/proc4.jpg" alt="Quality Check" onerror="this.parentElement.style.background='#0f0f1a'">
-      </div>
+      <div class="ps-img-wrap"><img src="images/proc4.jpg" alt="Quality Check" onerror="this.parentElement.style.background='#0f0f1a'"></div>
       <h4>QC</h4>
       <p>Each cap is inspected 3 times before shipping. If it's not perfect, it doesn't leave the studio.</p>
     </div>
@@ -230,31 +293,16 @@
   </div>
   <div class="contact-right">
     <div class="contact-info">
-      <div class="ci-item">
-        <div class="ci-label">EMAIL</div>
-        <div class="ci-value">hello@vexocaps.com</div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-label">PHONE</div>
-        <div class="ci-value">+1 (310) 555-0198</div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-label">INSTAGRAM</div>
-        <div class="ci-value">@vexo.caps</div>
-      </div>
+      <div class="ci-item"><div class="ci-label">EMAIL</div><div class="ci-value">hello@vexocaps.com</div></div>
+      <div class="ci-item"><div class="ci-label">PHONE</div><div class="ci-value">+1 (310) 555-0198</div></div>
+      <div class="ci-item"><div class="ci-label">INSTAGRAM</div><div class="ci-value">@vexo.caps</div></div>
     </div>
     <form class="contact-form" id="contactForm">
       <div class="form-row">
-        <div class="form-group">
-          <input type="text" placeholder="Your Name" required />
-        </div>
-        <div class="form-group">
-          <input type="email" placeholder="Your Email" required />
-        </div>
+        <div class="form-group"><input type="text" placeholder="Your Name" required /></div>
+        <div class="form-group"><input type="email" placeholder="Your Email" required /></div>
       </div>
-      <div class="form-group">
-        <textarea placeholder="Your Message" rows="4" required></textarea>
-      </div>
+      <div class="form-group"><textarea placeholder="Your Message" rows="4" required></textarea></div>
       <button type="submit" class="btn-primary">SEND MESSAGE</button>
     </form>
   </div>
@@ -269,15 +317,15 @@
   <div class="footer-grid">
     <div class="footer-col">
       <h5>SHOP</h5>
-      <a href="#">Men's Collection</a>
-      <a href="#">Women's Collection</a>
-      <a href="#">Limited Drops</a>
-      <a href="#">Accessories</a>
+      <a href="#store">Men's Collection</a>
+      <a href="#store">Women's Collection</a>
+      <a href="full-collection.html">Limited Drops</a>
+      <a href="full-collection.html">Accessories</a>
     </div>
     <div class="footer-col">
       <h5>COMPANY</h5>
-      <a href="#">About Us</a>
-      <a href="#">Sustainability</a>
+      <a href="#about">About Us</a>
+      <a href="#why">Sustainability</a>
       <a href="#">Careers</a>
       <a href="#">Press</a>
     </div>
@@ -302,7 +350,6 @@
   </div>
 </footer>
 
-<!-- Add to cart toast -->
 <div class="toast" id="toast">
   <span class="toast-icon">✓</span>
   <span id="toastMsg">Added to cart!</span>
