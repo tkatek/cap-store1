@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320">
-  <rect width="400" height="320" fill="#0d0d1a"/>
-  <path d="M100 280 Q100 140 200 115 Q300 140 300 280 Z" fill="#e8ff00" opacity="0.8"/>
-  <circle cx="200" cy="160" r="22" fill="#0d0d1a" opacity="0.7"/>
-  <text x="200" y="167" text-anchor="middle" font-family="monospace" font-size="12" fill="#e8ff00">VEXO</text>
-  <ellipse cx="200" cy="280" rx="110" ry="18" fill="#060610" opacity="0.9"/>
-  <rect x="90" y="262" width="220" height="18" rx="9" fill="#0a0a14" opacity="0.9"/>
-</svg>
