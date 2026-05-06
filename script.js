@@ -1,11 +1,11 @@
 // ======================== PRODUCTS DATA ========================
 const products = [
   { id: 1, name: "Shadow Strike", style: "Structured Snapback", price: 49, badge: "BEST SELLER", img: "images/cap1.jpg", color: "#1a1a1a" },
-  { id: 2, name: "Polar Drift", style: "Wool Blend Dad Cap", price: 55, badge: "NEW", img: "images/cap2.jpg", color: "#2a2a3a" },
-  { id: 3, name: "Ember Run", style: "Mesh Trucker", price: 42, badge: null, img: "images/cap3.jpg", color: "#1c1020" },
-  { id: 4, name: "Desert Fox", style: "Washed Cotton 6-Panel", price: 58, badge: "LIMITED", img: "images/cap4.jpg", color: "#1a120a" },
-  { id: 5, name: "Night Crew", style: "Corduroy Snapback", price: 62, badge: null, img: "images/cap5.jpg", color: "#0a0a1a" },
-  { id: 6, name: "Vapor Form", style: "Technical Strapback", price: 75, badge: "COLLAB", img: "images/cap6.jpg", color: "#0a1a0a" },
+  { id: 2, name: "Polar Drift",   style: "Wool Blend Dad Cap",  price: 55, badge: "NEW",         img: "images/cap2.jpg", color: "#2a2a3a" },
+  { id: 3, name: "Ember Run",     style: "Mesh Trucker",        price: 42, badge: null,           img: "images/cap3.jpg", color: "#1c1020" },
+  { id: 4, name: "Desert Fox",    style: "Washed Cotton 6-Panel",price: 58, badge: "LIMITED",    img: "images/cap4.jpg", color: "#1a120a" },
+  { id: 5, name: "Night Crew",    style: "Corduroy Snapback",   price: 62, badge: null,           img: "images/cap5.jpg", color: "#0a0a1a" },
+  { id: 6, name: "Vapor Form",    style: "Technical Strapback", price: 75, badge: "COLLAB",      img: "images/cap6.jpg", color: "#0a1a0a" },
 ];
 
 // ======================== CART ========================
@@ -25,20 +25,15 @@ function updateCartUI() {
     el.textContent = count;
     el.classList.remove('bump');
     void el.offsetWidth;
-    el.classList.add('bump');
+    if (count > 0) el.classList.add('bump');
   });
 }
 
 function addToCart(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
-
   const existing = cart.find(i => i.id === productId);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ ...product, qty: 1 });
-  }
+  existing ? existing.qty++ : cart.push({ ...product, qty: 1 });
   saveCart();
   updateCartUI();
   showToast(`${product.name} added to cart!`);
@@ -57,9 +52,12 @@ function showToast(msg) {
 }
 
 // ======================== RENDER PRODUCTS ========================
-function renderProducts(container, items) {
-  container.innerHTML = '';
-  items.forEach((p, i) => {
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+  products.forEach((p, i) => {
     const card = document.createElement('div');
     card.className = 'product-card reveal';
     card.style.transitionDelay = `${i * 0.08}s`;
@@ -68,7 +66,7 @@ function renderProducts(container, items) {
         <img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'">
         ${p.badge ? `<div class="pc-badge">${p.badge}</div>` : ''}
         <div class="pc-overlay">
-          <div class="pc-quick-btn">QUICK ADD</div>
+          <div class="pc-quick-btn" data-id="${p.id}">QUICK ADD</div>
         </div>
       </div>
       <div class="pc-info">
@@ -80,76 +78,29 @@ function renderProducts(container, items) {
         </div>
       </div>
     `;
-    container.appendChild(card);
+    grid.appendChild(card);
   });
 
-  // Attach events
-  container.querySelectorAll('.add-to-cart-btn, .pc-quick-btn').forEach(btn => {
+  // Attach add-to-cart events
+  grid.querySelectorAll('.add-to-cart-btn, .pc-quick-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const id = parseInt(btn.closest('[data-id]')?.dataset.id || btn.closest('.product-card')?.querySelector('.add-to-cart-btn')?.dataset.id);
-      if (id) {
-        const addBtn = btn.closest('.product-card').querySelector('.add-to-cart-btn');
-        addBtn.classList.remove('adding');
-        void addBtn.offsetWidth;
-        addBtn.classList.add('adding');
-        addToCart(id);
-      }
+      const id = parseInt(btn.dataset.id);
+      const card = btn.closest('.product-card');
+      const addBtn = card.querySelector('.add-to-cart-btn');
+      addBtn.classList.remove('adding');
+      void addBtn.offsetWidth;
+      addBtn.classList.add('adding');
+      addToCart(id);
     });
   });
 
-  // Trigger reveal
-  setTimeout(() => {
-    container.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  }, 100);
-}
-
-// ======================== TIMELINE ========================
-let tlIndex = 0;
-let tlItems;
-let tlTrack;
-
-function initTimeline() {
-  tlTrack = document.getElementById('timelineTrack');
-  tlItems = tlTrack?.children;
-  if (!tlTrack) return;
-
-  const dotsContainer = document.getElementById('tlDots');
-  const count = tlItems.length;
-
-  for (let i = 0; i < count; i++) {
-    const dot = document.createElement('div');
-    dot.className = `tl-dot ${i === 0 ? 'active' : ''}`;
-    dot.addEventListener('click', () => goToTl(i));
-    dotsContainer.appendChild(dot);
-  }
-
-  document.getElementById('tlPrev')?.addEventListener('click', () => goToTl(tlIndex - 1));
-  document.getElementById('tlNext')?.addEventListener('click', () => goToTl(tlIndex + 1));
-
-  // Touch/drag support
-  let startX = 0;
-  tlTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
-  tlTrack.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) goToTl(diff > 0 ? tlIndex + 1 : tlIndex - 1);
-  });
-}
-
-function goToTl(index) {
-  if (!tlItems) return;
-  const count = tlItems.length;
-  tlIndex = Math.max(0, Math.min(index, count - 1));
-  const itemW = tlItems[0].offsetWidth + 40;
-  tlTrack.scrollLeft = tlIndex * itemW;
-
-  document.querySelectorAll('.tl-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === tlIndex);
-  });
+  // Observe for reveal animation
+  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 }
 
 // ======================== SCROLL REVEAL ========================
-const observer = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
@@ -158,40 +109,61 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 function initReveal() {
-  document.querySelectorAll('.reveal, .ps-reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.ps-reveal').forEach(el => revealObserver.observe(el));
+  document.querySelectorAll(
+    '.store-header, .why-left, .why-right, .contact-left, .contact-right'
+  ).forEach(el => {
+    el.classList.add('reveal');
+    revealObserver.observe(el);
+  });
 }
 
 // ======================== STATS COUNTER ========================
+let statsDone = false;
 function animateStats() {
+  if (statsDone) return;
+  statsDone = true;
   document.querySelectorAll('.stat-num').forEach(el => {
     const target = parseInt(el.dataset.target);
     let current = 0;
-    const increment = target / 60;
+    const step = target / 60;
     const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
       el.textContent = Math.floor(current);
     }, 20);
   });
 }
 
 const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateStats();
-      statsObserver.disconnect();
-    }
-  });
-}, { threshold: 0.3 });
+  entries.forEach(entry => { if (entry.isIntersecting) animateStats(); });
+}, { threshold: 0.4 });
 
 // ======================== NAVBAR ========================
 function initNavbar() {
   const nav = document.getElementById('navbar');
+  if (!nav) return;
+
+  // Scroll class
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Smooth anchor clicks
+  nav.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+
+      // For the about section we need to scroll to the START of the section
+      // (the browser will hit the sticky correctly)
+      const offset = href === '#about' ? 0 : -70;
+      const top = target.getBoundingClientRect().top + window.scrollY + offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
   });
 }
 
@@ -199,32 +171,107 @@ function initNavbar() {
 function initContact() {
   document.getElementById('contactForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    showToast('Message sent! We\'ll get back to you soon.');
+    showToast("Message sent! We'll get back to you soon.");
     e.target.reset();
   });
 }
 
+// ========================================================================
+//   HORIZONTAL SCROLL — ABOUT SECTION
+//   How it works:
+//   - The .about section is very tall (600vh set in CSS).
+//   - .about-sticky is position:sticky so it stays on screen.
+//   - As the user scrolls DOWN through the tall section, we read how far
+//     they are through it (0 → 1) and convert that into a translateX
+//     value that slides the .about-h-track leftward.
+//   - This gives the illusion of horizontal scrolling driven by the
+//     normal vertical scroll wheel / trackpad.
+// ========================================================================
+function initHorizontalScroll() {
+  const section   = document.getElementById('about');
+  const track     = document.getElementById('hTrack');
+  const bar       = document.getElementById('progressBar');
+  const label     = document.getElementById('progressLabel');
+  const items     = track ? Array.from(track.querySelectorAll('.hs-item')) : [];
+
+  if (!section || !track || items.length === 0) return;
+
+  const TOTAL_ITEMS = items.length;   // 15
+  let   rafId       = null;
+  let   lastScroll  = -1;
+
+  function update() {
+    const scrollY      = window.scrollY;
+
+    // Skip if scroll hasn't changed (saves paint)
+    if (scrollY === lastScroll) { rafId = null; return; }
+    lastScroll = scrollY;
+
+    const sectionTop    = section.offsetTop;
+    const sectionHeight = section.offsetHeight;      // the tall 600vh block
+    const viewH         = window.innerHeight;
+
+    // How far the user has scrolled INTO the section (0 = just arrived, 1 = about to leave)
+    const rawProgress = (scrollY - sectionTop) / (sectionHeight - viewH);
+    const progress    = Math.max(0, Math.min(1, rawProgress));
+
+    // Total pixels we need to shift the track
+    // trackScrollWidth = full track width minus the visible area width
+    const trackWrap     = track.parentElement;                 // .about-h-track-wrap
+    const visibleWidth  = trackWrap ? trackWrap.offsetWidth : window.innerWidth;
+    const totalShift    = track.scrollWidth - visibleWidth;
+
+    // Apply the horizontal translation
+    const shift = progress * totalShift;
+    track.style.transform = `translateX(${-shift}px)`;
+
+    // ---- Progress bar ----
+    if (bar)   bar.style.width   = `${(progress * 100).toFixed(1)}%`;
+
+    // ---- Active item highlight ----
+    // Which item is roughly in the "spotlight" centre zone?
+    const activeIndex = Math.round(progress * (TOTAL_ITEMS - 1));
+    items.forEach((item, i) => {
+      item.classList.toggle('active', i === activeIndex);
+    });
+
+    // ---- Counter label ----
+    if (label) {
+      const display = Math.min(activeIndex + 1, TOTAL_ITEMS);
+      label.textContent = `${String(display).padStart(2,'0')} / ${String(TOTAL_ITEMS).padStart(2,'0')}`;
+    }
+
+    rafId = null;
+  }
+
+  // Throttle via rAF so we never run more than once per frame
+  function onScroll() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(update);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Run once immediately to set initial state
+  update();
+
+  // Re-calculate on resize (track width may change)
+  window.addEventListener('resize', () => {
+    lastScroll = -1; // force recalc
+    update();
+  }, { passive: true });
+}
+
 // ======================== INIT ========================
 document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('productsGrid');
-  if (grid) renderProducts(grid, products);
-
+  updateCartUI();
+  renderProducts();
   initNavbar();
   initReveal();
-  initTimeline();
   initContact();
-  updateCartUI();
+  initHorizontalScroll();
 
-  // Add reveal to non-product elements
-  document.querySelectorAll('.about-header, .store-header, .why-left, .why-right, .contact-left, .contact-right').forEach(el => {
-    el.classList.add('reveal');
-    observer.observe(el);
-  });
-
-  const whySection = document.querySelector('.why-stats');
-  if (whySection) statsObserver.observe(whySection);
+  // Stats counter observer
+  const whyStats = document.querySelector('.why-stats');
+  if (whyStats) statsObserver.observe(whyStats);
 });
-
-// Export for full-collection page
-window.vexoProducts = products;
-window.vexoCart = { addToCart, getCartCount, updateCartUI, saveCart };

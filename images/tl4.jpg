@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
-  <rect width="340" height="200" fill="#0f0f1a"/>
-  <text x="170" y="115" text-anchor="middle" font-family="sans-serif" font-size="48" fill="rgba(232,255,0,0.12)" font-weight="bold">2019</text>
-  <circle cx="170" cy="90" r="40" fill="none" stroke="#e8ff00" stroke-width="0.5" opacity="0.3"/>
-</svg>
