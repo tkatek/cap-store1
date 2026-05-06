@@ -834,7 +834,20 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .why-card:hover { transform: translateY(-6px); border-color: var(--border-green); }
 .why-card:hover::after { transform: scaleX(1); }
-.wc-icon { font-size: 26px; margin-bottom: 14px; }
+.wc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 18px;
+  font-size: 24px;
+  color: var(--cream);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 14px 35px rgba(0,0,0,0.12);
+}
 .why-card h4 {
   font-family: var(--font-head);
   font-size: 15px;

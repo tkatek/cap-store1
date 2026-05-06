@@ -1,17 +1,17 @@
 // collection.js
 const allProducts = [
   { id: 1, name: "Shadow Strike", style: "Structured Snapback", price: 49, badge: "BEST SELLER", img: "images/one.jpg", color: "#1a1a1a", category: "snapback" },
-  { id: 2, name: "Polar Drift", style: "Wool Blend Dad Cap", price: 55, badge: "NEW", img: "images/cap2.jpg", color: "#2a2a3a", category: "dad" },
-  { id: 3, name: "Ember Run", style: "Mesh Trucker", price: 42, badge: null, img: "images/cap3.jpg", color: "#1c1020", category: "trucker" },
-  { id: 4, name: "Desert Fox", style: "Washed Cotton 6-Panel", price: 58, badge: "LIMITED", img: "images/cap4.jpg", color: "#1a120a", category: "limited" },
-  { id: 5, name: "Night Crew", style: "Corduroy Snapback", price: 62, badge: null, img: "images/cap5.jpg", color: "#0a0a1a", category: "snapback" },
-  { id: 6, name: "Vapor Form", style: "Technical Strapback", price: 75, badge: "COLLAB", img: "images/cap6.jpg", color: "#0a1a0a", category: "limited" },
-  { id: 7, name: "Stone Cold", style: "Washed Snapback", price: 45, badge: null, img: "images/cap7.jpg", color: "#1a1a18", category: "snapback" },
-  { id: 8, name: "Clay Route", style: "Unstructured Dad Cap", price: 52, badge: null, img: "images/cap8.jpg", color: "#1a1208", category: "dad" },
-  { id: 9, name: "Foam Shore", style: "Vintage Trucker", price: 38, badge: "SALE", img: "images/cap9.jpg", color: "#081218", category: "trucker" },
-  { id: 10, name: "Pitch Black", style: "All-Over Snapback", price: 85, badge: "LIMITED", img: "images/cap10.jpg", color: "#080810", category: "limited" },
-  { id: 11, name: "Cream Dream", style: "Corduroy Dad Cap", price: 59, badge: null, img: "images/cap11.jpg", color: "#1a1510", category: "dad" },
-  { id: 12, name: "Circuit Board", style: "Tech Mesh Trucker", price: 68, badge: "NEW", img: "images/cap12.jpg", color: "#0a180a", category: "trucker" },
+  { id: 2, name: "Polar Drift", style: "Wool Blend Dad Cap", price: 55, badge: "NEW", img: "images/two.jpg", color: "#2a2a3a", category: "dad" },
+  { id: 3, name: "Ember Run", style: "Mesh Trucker", price: 42, badge: null, img: "images/tree.jpg", color: "#1c1020", category: "trucker" },
+  { id: 4, name: "Desert Fox", style: "Washed Cotton 6-Panel", price: 58, badge: "LIMITED", img: "images/for.jpg", color: "#1a120a", category: "limited" },
+  { id: 5, name: "Night Crew", style: "Corduroy Snapback", price: 62, badge: null, img: "images/five.jpg", color: "#0a0a1a", category: "snapback" },
+  { id: 6, name: "Vapor Form", style: "Technical Strapback", price: 75, badge: "COLLAB", img: "images/six.jpg", color: "#0a1a0a", category: "limited" },
+  { id: 7, name: "Stone Cold", style: "Washed Snapback", price: 45, badge: null, img: "images/sun.jpg", color: "#1a1a18", category: "snapback" },
+  { id: 8, name: "Clay Route", style: "Unstructured Dad Cap", price: 52, badge: null, img: "images/o.jpg", color: "#1a1208", category: "dad" },
+  { id: 9, name: "Foam Shore", style: "Vintage Trucker", price: 38, badge: "SALE", img: "images/band.jpg", color: "#081218", category: "trucker" },
+  { id: 10, name: "Pitch Black", style: "All-Over Snapback", price: 85, badge: "LIMITED", img: "images/jpn.jpg", color: "#080810", category: "limited" },
+  { id: 11, name: "Cream Dream", style: "Corduroy Dad Cap", price: 59, badge: null, img: "images/bl.jpg", color: "#1a1510", category: "dad" },
+  { id: 12, name: "Circuit Board", style: "Tech Mesh Trucker", price: 68, badge: "NEW", img: "images/p.jpg", color: "#0a180a", category: "trucker" },
 ];
 
 // Cart
