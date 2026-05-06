@@ -1,66 +1,87 @@
-// ======================== PRODUCTS DATA ========================
-const products = [
-  { id: 1, name: "Shadow Strike", style: "Structured Snapback", price: 49, badge: "BEST SELLER", img: "images/cap1.jpg", color: "#1a1a1a" },
-  { id: 2, name: "Polar Drift",   style: "Wool Blend Dad Cap",  price: 55, badge: "NEW",         img: "images/cap2.jpg", color: "#2a2a3a" },
-  { id: 3, name: "Ember Run",     style: "Mesh Trucker",        price: 42, badge: null,           img: "images/cap3.jpg", color: "#1c1020" },
-  { id: 4, name: "Desert Fox",    style: "Washed Cotton 6-Panel",price: 58, badge: "LIMITED",    img: "images/cap4.jpg", color: "#1a120a" },
-  { id: 5, name: "Night Crew",    style: "Corduroy Snapback",   price: 62, badge: null,           img: "images/cap5.jpg", color: "#0a0a1a" },
-  { id: 6, name: "Vapor Form",    style: "Technical Strapback", price: 75, badge: "COLLAB",      img: "images/cap6.jpg", color: "#0a1a0a" },
+'use strict';
+
+/* ================================================================
+   VEXO — script.js
+   Handles: horizontal scroll, hamburger sidebar, cart,
+            products render, scroll reveal, stats counter,
+            smooth nav, contact form
+   ================================================================ */
+
+// ----------------------------------------------------------------
+// 1. PRODUCTS DATA
+// ----------------------------------------------------------------
+const PRODUCTS = [
+  { id:1, name:"Shadow Strike", style:"Structured Snapback",    price:49, badge:"BEST SELLER", img:"images/cap1.jpg",  color:"#0b1c14" },
+  { id:2, name:"Polar Drift",   style:"Wool Blend Dad Cap",     price:55, badge:"NEW",         img:"images/cap2.jpg",  color:"#111"    },
+  { id:3, name:"Ember Run",     style:"Mesh Trucker",           price:42, badge:null,           img:"images/cap3.jpg",  color:"#0d1a10" },
+  { id:4, name:"Desert Fox",    style:"Washed Cotton 6-Panel",  price:58, badge:"LIMITED",     img:"images/cap4.jpg",  color:"#0b1c14" },
+  { id:5, name:"Night Crew",    style:"Corduroy Snapback",      price:62, badge:null,           img:"images/cap5.jpg",  color:"#111"    },
+  { id:6, name:"Vapor Form",    style:"Technical Strapback",    price:75, badge:"COLLAB",      img:"images/cap6.jpg",  color:"#0d1810" },
 ];
 
-// ======================== CART ========================
-let cart = JSON.parse(localStorage.getItem('vexoCart') || '[]');
+// ----------------------------------------------------------------
+// 2. CART
+// ----------------------------------------------------------------
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('vexoCart') || '[]'); } catch(e) { cart = []; }
 
 function saveCart() {
-  localStorage.setItem('vexoCart', JSON.stringify(cart));
+  try { localStorage.setItem('vexoCart', JSON.stringify(cart)); } catch(e) {}
 }
 
-function getCartCount() {
-  return cart.reduce((sum, item) => sum + item.qty, 0);
+function cartCount() {
+  return cart.reduce((s, i) => s + i.qty, 0);
 }
 
-function updateCartUI() {
-  const count = getCartCount();
+function updateCartBadge() {
+  const count = cartCount();
   document.querySelectorAll('#cartCount').forEach(el => {
     el.textContent = count;
-    el.classList.remove('bump');
-    void el.offsetWidth;
-    if (count > 0) el.classList.add('bump');
+    if (count > 0) {
+      el.classList.remove('bump');
+      void el.offsetWidth;
+      el.classList.add('bump');
+    }
   });
 }
 
 function addToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product) return;
-  const existing = cart.find(i => i.id === productId);
-  existing ? existing.qty++ : cart.push({ ...product, qty: 1 });
+  const p = PRODUCTS.find(x => x.id === productId);
+  if (!p) return;
+  const ex = cart.find(i => i.id === productId);
+  ex ? ex.qty++ : cart.push({ ...p, qty: 1 });
   saveCart();
-  updateCartUI();
-  showToast(`${product.name} added to cart!`);
+  updateCartBadge();
+  toast(`${p.name} added to cart!`);
 }
 
-// ======================== TOAST ========================
-let toastTimeout;
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  const toastMsg = document.getElementById('toastMsg');
-  if (!toast) return;
-  toastMsg.textContent = msg;
-  toast.classList.add('show');
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+// ----------------------------------------------------------------
+// 3. TOAST
+// ----------------------------------------------------------------
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  const msgEl = document.getElementById('toastMsg');
+  if (!el) return;
+  msgEl.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
 }
 
-// ======================== RENDER PRODUCTS ========================
+// ----------------------------------------------------------------
+// 4. RENDER PRODUCTS
+// ----------------------------------------------------------------
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
   if (!grid) return;
 
   grid.innerHTML = '';
-  products.forEach((p, i) => {
+
+  PRODUCTS.forEach((p, i) => {
     const card = document.createElement('div');
     card.className = 'product-card reveal';
-    card.style.transitionDelay = `${i * 0.08}s`;
+    card.style.transitionDelay = `${i * 0.07}s`;
     card.innerHTML = `
       <div class="pc-img-wrap" style="background:${p.color}">
         <img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'">
@@ -74,16 +95,14 @@ function renderProducts() {
         <div class="pc-style">${p.style}</div>
         <div class="pc-bottom">
           <div class="pc-price">$${p.price}</div>
-          <button class="add-to-cart-btn" data-id="${p.id}" title="Add to cart">+</button>
+          <button class="add-to-cart-btn" data-id="${p.id}" aria-label="Add ${p.name} to cart">+</button>
         </div>
-      </div>
-    `;
+      </div>`;
     grid.appendChild(card);
   });
 
-  // Attach add-to-cart events
   grid.querySelectorAll('.add-to-cart-btn, .pc-quick-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       e.stopPropagation();
       const id = parseInt(btn.dataset.id);
       const card = btn.closest('.product-card');
@@ -95,156 +114,188 @@ function renderProducts() {
     });
   });
 
-  // Observe for reveal animation
-  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  // Observe newly rendered cards for reveal
+  grid.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 }
 
-// ======================== SCROLL REVEAL ========================
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
+// ----------------------------------------------------------------
+// 5. SCROLL REVEAL
+// ----------------------------------------------------------------
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 
 function initReveal() {
-  document.querySelectorAll('.ps-reveal').forEach(el => revealObserver.observe(el));
-  document.querySelectorAll(
-    '.store-header, .why-left, .why-right, .contact-left, .contact-right'
-  ).forEach(el => {
-    el.classList.add('reveal');
-    revealObserver.observe(el);
-  });
+  document.querySelectorAll('.ps-reveal, .reveal').forEach(el => revealObs.observe(el));
 }
 
-// ======================== STATS COUNTER ========================
-let statsDone = false;
-function animateStats() {
-  if (statsDone) return;
-  statsDone = true;
+// ----------------------------------------------------------------
+// 6. STATS COUNTER
+// ----------------------------------------------------------------
+let statsFired = false;
+function fireStats() {
+  if (statsFired) return;
+  statsFired = true;
   document.querySelectorAll('.stat-num').forEach(el => {
-    const target = parseInt(el.dataset.target);
-    let current = 0;
-    const step = target / 60;
-    const timer = setInterval(() => {
-      current += step;
-      if (current >= target) { current = target; clearInterval(timer); }
-      el.textContent = Math.floor(current);
-    }, 20);
+    const target = parseInt(el.dataset.target, 10);
+    let cur = 0;
+    const step = target / 55;
+    const t = setInterval(() => {
+      cur = Math.min(cur + step, target);
+      el.textContent = Math.floor(cur);
+      if (cur >= target) clearInterval(t);
+    }, 18);
   });
 }
 
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if (entry.isIntersecting) animateStats(); });
-}, { threshold: 0.4 });
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) fireStats(); });
+}, { threshold: 0.35 });
 
-// ======================== NAVBAR ========================
+// ----------------------------------------------------------------
+// 7. NAVBAR — scroll class + smooth anchor
+// ----------------------------------------------------------------
 function initNavbar() {
   const nav = document.getElementById('navbar');
   if (!nav) return;
 
-  // Scroll class
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
-  // Smooth anchor clicks
-  nav.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
+  // Smooth scroll for ALL anchor links on the page
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
       const href = link.getAttribute('href');
-      if (href === '#') return;
+      if (!href || href === '#') return;
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
 
-      // For the about section we need to scroll to the START of the section
-      // (the browser will hit the sticky correctly)
-      const offset = href === '#about' ? 0 : -70;
-      const top = target.getBoundingClientRect().top + window.scrollY + offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      // Close sidebar if open
+      closeSidebar();
+
+      // For the about section, scroll to absolute top of the section
+      // so the sticky mechanism starts from zero
+      const top = target.getBoundingClientRect().top + window.scrollY;
+      const offset = href === '#about' ? 0 : -76;
+      window.scrollTo({ top: top + offset, behavior: 'smooth' });
     });
   });
 }
 
-// ======================== CONTACT FORM ========================
+// ----------------------------------------------------------------
+// 8. HAMBURGER SIDEBAR
+// ----------------------------------------------------------------
+function initSidebar() {
+  const hamburger = document.getElementById('hamburger');
+  const sidebar   = document.getElementById('sidebar');
+  const overlay   = document.getElementById('sidebarOverlay');
+  const closeBtn  = document.getElementById('sidebarClose');
+  if (!hamburger || !sidebar) return;
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = sidebar.classList.contains('open');
+    isOpen ? closeSidebar() : openSidebar();
+  });
+
+  overlay?.addEventListener('click', closeSidebar);
+  closeBtn?.addEventListener('click', closeSidebar);
+
+  // Close on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeSidebar();
+  });
+}
+
+function openSidebar() {
+  const sidebar  = document.getElementById('sidebar');
+  const overlay  = document.getElementById('sidebarOverlay');
+  const hamburger = document.getElementById('hamburger');
+  sidebar?.classList.add('open');
+  overlay?.classList.add('show');
+  hamburger?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  const sidebar  = document.getElementById('sidebar');
+  const overlay  = document.getElementById('sidebarOverlay');
+  const hamburger = document.getElementById('hamburger');
+  sidebar?.classList.remove('open');
+  overlay?.classList.remove('show');
+  hamburger?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ----------------------------------------------------------------
+// 9. CONTACT FORM
+// ----------------------------------------------------------------
 function initContact() {
-  document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+  document.getElementById('contactForm')?.addEventListener('submit', e => {
     e.preventDefault();
-    showToast("Message sent! We'll get back to you soon.");
+    toast("Message sent! We'll be in touch soon.");
     e.target.reset();
   });
 }
 
-// ========================================================================
-//   HORIZONTAL SCROLL — ABOUT SECTION
-//   How it works:
-//   - The .about section is very tall (600vh set in CSS).
-//   - .about-sticky is position:sticky so it stays on screen.
-//   - As the user scrolls DOWN through the tall section, we read how far
-//     they are through it (0 → 1) and convert that into a translateX
-//     value that slides the .about-h-track leftward.
-//   - This gives the illusion of horizontal scrolling driven by the
-//     normal vertical scroll wheel / trackpad.
-// ========================================================================
+// ----------------------------------------------------------------
+// 10. HORIZONTAL SCROLL — ABOUT SECTION
+//
+//  Technique: The .about section is 600vh tall. .about-sticky is
+//  position:sticky at top:0 with height:100vh.
+//  As the user scrolls down through the tall section we compute
+//  a progress value 0→1 and translateX the .h-track leftward,
+//  creating the illusion of horizontal scrolling.
+// ----------------------------------------------------------------
 function initHorizontalScroll() {
-  const section   = document.getElementById('about');
-  const track     = document.getElementById('hTrack');
-  const bar       = document.getElementById('progressBar');
-  const label     = document.getElementById('progressLabel');
-  const items     = track ? Array.from(track.querySelectorAll('.hs-item')) : [];
+  const section = document.getElementById('about');
+  const track   = document.getElementById('hTrack');
+  const bar     = document.getElementById('progressBar');
+  const label   = document.getElementById('progressLabel');
+  const items   = track ? Array.from(track.querySelectorAll('.hs-item')) : [];
 
   if (!section || !track || items.length === 0) return;
 
-  const TOTAL_ITEMS = items.length;   // 15
-  let   rafId       = null;
-  let   lastScroll  = -1;
+  const TOTAL = items.length;
+  let rafId = null;
+  let lastY = -1;
 
   function update() {
-    const scrollY      = window.scrollY;
+    const scrollY = window.scrollY;
+    if (scrollY === lastY) { rafId = null; return; }
+    lastY = scrollY;
 
-    // Skip if scroll hasn't changed (saves paint)
-    if (scrollY === lastScroll) { rafId = null; return; }
-    lastScroll = scrollY;
+    // How far through the section (0 = just entered, 1 = leaving)
+    const sectionTop = section.offsetTop;
+    const sectionH   = section.offsetHeight;
+    const viewH      = window.innerHeight;
 
-    const sectionTop    = section.offsetTop;
-    const sectionHeight = section.offsetHeight;      // the tall 600vh block
-    const viewH         = window.innerHeight;
+    const raw      = (scrollY - sectionTop) / (sectionH - viewH);
+    const progress = Math.max(0, Math.min(1, raw));
 
-    // How far the user has scrolled INTO the section (0 = just arrived, 1 = about to leave)
-    const rawProgress = (scrollY - sectionTop) / (sectionHeight - viewH);
-    const progress    = Math.max(0, Math.min(1, rawProgress));
-
-    // Total pixels we need to shift the track
-    // trackScrollWidth = full track width minus the visible area width
-    const trackWrap     = track.parentElement;                 // .about-h-track-wrap
-    const visibleWidth  = trackWrap ? trackWrap.offsetWidth : window.innerWidth;
-    const totalShift    = track.scrollWidth - visibleWidth;
-
-    // Apply the horizontal translation
-    const shift = progress * totalShift;
+    // Shift the track
+    const wrapW     = track.parentElement ? track.parentElement.offsetWidth : window.innerWidth;
+    const maxShift  = track.scrollWidth - wrapW;
+    const shift     = progress * maxShift;
     track.style.transform = `translateX(${-shift}px)`;
 
-    // ---- Progress bar ----
-    if (bar)   bar.style.width   = `${(progress * 100).toFixed(1)}%`;
+    // Progress bar
+    if (bar) bar.style.width = `${(progress * 100).toFixed(1)}%`;
 
-    // ---- Active item highlight ----
-    // Which item is roughly in the "spotlight" centre zone?
-    const activeIndex = Math.round(progress * (TOTAL_ITEMS - 1));
-    items.forEach((item, i) => {
-      item.classList.toggle('active', i === activeIndex);
-    });
+    // Active item
+    const activeIdx = Math.round(progress * (TOTAL - 1));
+    items.forEach((item, i) => item.classList.toggle('active', i === activeIdx));
 
-    // ---- Counter label ----
+    // Counter
     if (label) {
-      const display = Math.min(activeIndex + 1, TOTAL_ITEMS);
-      label.textContent = `${String(display).padStart(2,'0')} / ${String(TOTAL_ITEMS).padStart(2,'0')}`;
+      const n = Math.min(activeIdx + 1, TOTAL);
+      label.textContent = `${String(n).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}`;
     }
 
     rafId = null;
   }
 
-  // Throttle via rAF so we never run more than once per frame
   function onScroll() {
     if (rafId) return;
     rafId = requestAnimationFrame(update);
@@ -252,26 +303,25 @@ function initHorizontalScroll() {
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Run once immediately to set initial state
-  update();
+  // Force recalc on resize
+  window.addEventListener('resize', () => { lastY = -1; update(); }, { passive: true });
 
-  // Re-calculate on resize (track width may change)
-  window.addEventListener('resize', () => {
-    lastScroll = -1; // force recalc
-    update();
-  }, { passive: true });
+  // Initial paint
+  update();
 }
 
-// ======================== INIT ========================
+// ----------------------------------------------------------------
+// 11. BOOT
+// ----------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  updateCartUI();
+  updateCartBadge();
   renderProducts();
   initNavbar();
+  initSidebar();
   initReveal();
   initContact();
   initHorizontalScroll();
 
-  // Stats counter observer
-  const whyStats = document.querySelector('.why-stats');
-  if (whyStats) statsObserver.observe(whyStats);
+  const statsEl = document.querySelector('.why-stats');
+  if (statsEl) statsObs.observe(statsEl);
 });
