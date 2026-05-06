@@ -11,12 +11,12 @@
 // 1. PRODUCTS DATA
 // ----------------------------------------------------------------
 const PRODUCTS = [
-  { id:1, name:"Shadow Strike", style:"Structured Snapback",    price:49, badge:"BEST SELLER", img:"images/cap1.jpg",  color:"#0b1c14" },
-  { id:2, name:"Polar Drift",   style:"Wool Blend Dad Cap",     price:55, badge:"NEW",         img:"images/cap2.jpg",  color:"#111"    },
-  { id:3, name:"Ember Run",     style:"Mesh Trucker",           price:42, badge:null,           img:"images/cap3.jpg",  color:"#0d1a10" },
-  { id:4, name:"Desert Fox",    style:"Washed Cotton 6-Panel",  price:58, badge:"LIMITED",     img:"images/cap4.jpg",  color:"#0b1c14" },
-  { id:5, name:"Night Crew",    style:"Corduroy Snapback",      price:62, badge:null,           img:"images/cap5.jpg",  color:"#111"    },
-  { id:6, name:"Vapor Form",    style:"Technical Strapback",    price:75, badge:"COLLAB",      img:"images/cap6.jpg",  color:"#0d1810" },
+  { id:1, name:"Shadow Strike", style:"Structured Snapback",    price:49, badge:"BEST SELLER", img:"images/one.jpg",  color:"#0b1c14" },
+  { id:2, name:"Polar Drift",   style:"Wool Blend Dad Cap",     price:55, badge:"NEW",         img:"images/two.jpg",  color:"#111"    },
+  { id:3, name:"Ember Run",     style:"Mesh Trucker",           price:42, badge:null,           img:"images/tree.jpg",  color:"#0d1a10" },
+  { id:4, name:"Desert Fox",    style:"Washed Cotton 6-Panel",  price:58, badge:"LIMITED",     img:"images/for.jpg",  color:"#0b1c14" },
+  { id:5, name:"Night Crew",    style:"Corduroy Snapback",      price:62, badge:null,           img:"images/five.jpg",  color:"#111"    },
+  { id:6, name:"Vapor Form",    style:"Technical Strapback",    price:75, badge:"COLLAB",      img:"images/six.jpg",  color:"#0d1810" },
 ];
 
 // ----------------------------------------------------------------

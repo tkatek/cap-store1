@@ -1,6 +1,6 @@
 // collection.js
 const allProducts = [
-  { id: 1, name: "Shadow Strike", style: "Structured Snapback", price: 49, badge: "BEST SELLER", img: "images/cap1.jpg", color: "#1a1a1a", category: "snapback" },
+  { id: 1, name: "Shadow Strike", style: "Structured Snapback", price: 49, badge: "BEST SELLER", img: "images/one.jpg", color: "#1a1a1a", category: "snapback" },
   { id: 2, name: "Polar Drift", style: "Wool Blend Dad Cap", price: 55, badge: "NEW", img: "images/cap2.jpg", color: "#2a2a3a", category: "dad" },
   { id: 3, name: "Ember Run", style: "Mesh Trucker", price: 42, badge: null, img: "images/cap3.jpg", color: "#1c1020", category: "trucker" },
   { id: 4, name: "Desert Fox", style: "Washed Cotton 6-Panel", price: 58, badge: "LIMITED", img: "images/cap4.jpg", color: "#1a120a", category: "limited" },
